@@ -1,0 +1,17 @@
+configuration:
+  app_key:
+    name: YouVersion App Key
+    description: >-
+      Sua chave de API obtida em https://platform.youversion.com.
+      Obrigatório para acessar a YouVersion Bible API.
+  bible_version_id:
+    name: ID da Versão da Bíblia
+    description: >-
+      ID numérico da versão da Bíblia. Exemplos:
+      1588 = NVI Português, 128 = NVT, 211 = ARA, 59 = ARC.
+      Consulte todas as versões em https://developers.youversion.com/api.
+  update_hour:
+    name: Hora de Atualização
+    description: >-
+      Hora do dia (0-23) em que o versículo será atualizado.
+      Padrão é 0 (meia-noite).
