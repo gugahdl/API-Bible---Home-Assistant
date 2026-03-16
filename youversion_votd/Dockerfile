@@ -6,7 +6,7 @@ LABEL \
     io.hass.type="addon" \
     io.hass.arch="aarch64|amd64|armhf|armv7|i386"
 
-RUN apk add --no-cache python3 py3-pip bash && \
+RUN apk add --no-cache python3 py3-pip bash jq && \
     pip3 install requests --break-system-packages
 
 COPY run.sh /run.sh
