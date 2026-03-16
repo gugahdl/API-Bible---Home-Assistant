@@ -1,0 +1,5 @@
+/etc/services.d/youversion/run:
+  permissions: "0755"
+  uid: 0
+  gid: 0
+  recurse: false
