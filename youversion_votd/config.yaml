@@ -13,7 +13,7 @@ init: false
 homeassistant_api: true
 options:
   app_key: ""
-  bible_version_id: 1588
+  bible_version_id: 129
   update_hour: 0
 schema:
   app_key: str
