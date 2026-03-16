@@ -1,5 +1,5 @@
 name: "YouVersion Versículo do Dia"
-version: "1.0.0"
+version: "1.0.1"
 slug: "youversion_votd"
 description: "Exibe o Versículo do Dia da YouVersion Bible API como sensor no Home Assistant."
 url: "https://github.com/gugahdl/API-Bible---Home-Assistant"
