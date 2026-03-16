@@ -17,4 +17,9 @@ python3 /usr/bin/youversion_votd.py
 while true; do
     sleep 60
     CURRENT_HOUR=$(date +%-H)
-    CURRENT_MIN​​​​​​​​​​​​​​​​
+    CURRENT_MIN=$(date +%-M)
+    if [ "${CURRENT_HOUR}" = "${UPDATE_HOUR}" ] && [ "${CURRENT_MIN}" = "1" ]; then
+        echo "Atualizando versículo do dia..."
+        python3 /usr/bin/youversion_votd.py
+    fi
+done
