@@ -11,5 +11,6 @@ RUN apk add --no-cache python3 py3-pip && \
 
 COPY rootfs /
 
-RUN chmod 755 /etc/services.d/youversion/run \
-    && chmod 755 /usr/bin/youversion_votd.py
+RUN find /etc/services.d -name "run" -exec chmod 755 {} \; && \
+    find /etc/cont-init.d -name "*.sh" -exec chmod 755 {} \; && \
+    chmod 755 /usr/bin/youversion_votd.py
