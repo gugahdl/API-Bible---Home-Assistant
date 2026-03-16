@@ -10,3 +10,6 @@ RUN apk add --no-cache python3 py3-pip && \
     pip3 install requests --break-system-packages
 
 COPY rootfs /
+
+RUN chmod a+x /etc/services.d/youversion/run && \
+    chmod a+x /usr/bin/youversion_votd.py
