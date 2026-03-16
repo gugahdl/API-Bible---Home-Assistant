@@ -6,11 +6,12 @@ LABEL \
     io.hass.type="addon" \
     io.hass.arch="aarch64|amd64|armhf|armv7|i386"
 
-RUN apk add --no-cache python3 py3-pip && \
+RUN apk add --no-cache python3 py3-pip bash && \
     pip3 install requests --break-system-packages
 
-COPY rootfs /
+COPY run.sh /run.sh
+COPY rootfs/usr/bin/youversion_votd.py /usr/bin/youversion_votd.py
 
-RUN find /etc/services.d -name "run" -exec chmod 755 {} \; && \
-    find /etc/cont-init.d -name "*.sh" -exec chmod 755 {} \; && \
-    chmod 755 /usr/bin/youversion_votd.py
+RUN chmod 755 /run.sh /usr/bin/youversion_votd.py
+
+ENTRYPOINT ["/bin/bash", "/run.sh"]
