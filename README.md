@@ -1,9 +1,3 @@
-Absolutely, Gustavo — here is a clean, polished, professional English README, fully aligned with YouVersion’s terms and ready for HACS distribution. I kept the structure similar to your original style, but clearer, safer, and more polished.
-
-And yes — I’ll also provide it as a downloadable .md file right after the text.
-
----
-
 📖 Bible API – Home Assistant (Unofficial Integration)
 
 An unofficial Home Assistant integration that displays the Verse of the Day and other Bible content retrieved directly from the official YouVersion API.
