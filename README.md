@@ -1,8 +1,8 @@
-# 📖 Bible API – Home Assistant (Unofficial Integration)
+# 📖 Bible API – Home Assistant Add-on (Unofficial)
 
-An **unofficial** Home Assistant integration that displays the **Verse of the Day** and other Bible content retrieved directly from the **official YouVersion API**.
+This is an **unofficial Home Assistant Add-on** that provides a small local service used to fetch and expose Bible content from the **official YouVersion API** for personal use inside Home Assistant.
 
-This integration works as a **custom component** and can be easily installed through **HACS**.
+The add-on does **not** redistribute Bible text, does **not** store content permanently, and does **not** provide any public API. It simply acts as a local helper service that your Home Assistant instance can call.
 
 ---
 
@@ -12,69 +12,60 @@ This project:
 
 - **does not redistribute** Bible content  
 - **does not store** text permanently  
-- **does not provide** a public API  
+- **does not provide** a public or external API  
 - **does not modify** Bible text  
 - **is not affiliated** with YouVersion or Life.Church  
 - **uses only** the official YouVersion API in accordance with their Terms of Use  
 
-All content is displayed **locally** within the user’s Home Assistant instance.
+All content is displayed **locally** inside the user’s Home Assistant environment.
 
 ### 📜 Required Attribution  
 **Bible text courtesy of YouVersion.**
 
 ---
 
-## 🧩 Features
+## 🧩 What This Add-on Does
 
-- Displays the **Verse of the Day** directly in Home Assistant  
-- Automatic updates  
-- Additional attributes such as reference and Bible version  
-- Fully compatible with automations (e.g., daily notifications)  
-- Simple UI-based configuration (HACS + Integrations menu)  
+- Runs a small local service inside Home Assistant  
+- Fetches the **Verse of the Day** from the official YouVersion API  
+- Makes the data available to Home Assistant through a local endpoint  
+- Allows you to build sensors, automations, and notifications  
+- Does not expose any data outside your Home Assistant instance  
 
 ---
 
-## 🛠️ Installation via HACS
+## 🛠️ Installation
 
-### 1. Requirements
-- HACS installed in your Home Assistant  
-- A YouVersion Developer Token (https://platform.youversion.com/)
+1. Add this repository to your Home Assistant Add-on Store  
+2. Install the add-on  
+3. Configure your **YouVersion Developer Token**  
+4. Start the add-on  
+5. Create a Home Assistant sensor pointing to the local endpoint  
 
-### 2. Add the repository to HACS
-In Home Assistant:
+---
 
-1. Go to **HACS → Integrations**  
-2. Open the menu (⋮) → **Custom repositories**  
-3. Add this repository:
+## ⚙️ Example Home Assistant Sensor
 
+```yaml
+sensor:
+  - platform: rest
+    name: YouVersion Verse of the Day
+    resource: http://localhost:PORT/verse
+    value_template: "{{ value_json.text }}"
+    json_attributes:
+      - reference
+      - version
 ```
-https://github.com/gugahdl/API-Bible---Home-Assistant
-```
 
-4. Category: **Integration**  
-5. Install the integration when it appears in the list  
+Replace `PORT` with the port configured in the add-on.
 
 ---
 
-## ⚙️ Configuration
-
-After installation:
-
-1. Go to **Settings → Devices & Services**  
-2. Click **Add Integration**  
-3. Search for **Bible API / YouVersion**  
-4. Enter your **Developer Token**  
-5. Choose your preferred Bible version (e.g., NVI, ARC, KJV)
-
-The sensor will be created automatically.
-
----
-
-## 🔔 Example Automation (Daily Notification)
+## 🔔 Example Automation
 
 ```yaml
 automation:
-  - alias: Verse of the Day
+  - alias: Verse of the Day Notification
     trigger:
       - platform: time
         at: "08:00:00"
@@ -89,16 +80,17 @@ automation:
 
 ---
 
-## 📂 Component Structure
+## 📂 Add-on Structure
 
 ```
-custom_components/youversion/
-  ├── __init__.py
-  ├── manifest.json
-  ├── sensor.py
-  ├── config_flow.py
-  ├── const.py
-  └── translations/
+bible-addon/
+  ├── Dockerfile
+  ├── config.json
+  ├── run.sh
+  ├── app/
+  │   ├── main.py
+  │   └── requirements.txt
+  └── README.md
 ```
 
 ---
