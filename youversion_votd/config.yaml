@@ -1,3 +1,10 @@
-# YouVersion - Verse of the Day
-
-Configuration file for the YouVersion Verse of the Day addon.
+name: "YouVersion Versículo do Dia"
+version: "1.0.0"
+slug: "youversion_votd"
+description: "Exibe o Versículo do Dia da YouVersion Bible API"
+arch:
+  - aarch64
+  - amd64
+  - armhf
+  - armv7
+  - i386
