@@ -1,5 +1,4 @@
-#!/bin/bash
-set -e
+#!/usr/bin/with-contenv bashio
 
 APP_KEY=$(bashio::config 'app_key')
 VERSION_ID=$(bashio::config 'bible_version_id')
@@ -8,7 +7,9 @@ UPDATE_HOUR=$(bashio::config 'update_hour')
 export APP_KEY
 export VERSION_ID
 
-echo "Iniciando YouVersion Versículo do Dia..."
+bashio::log.info "Iniciando YouVersion Versículo do Dia..."
+bashio::log.info "Versão ID: ${VERSION_ID} | Hora de atualização: ${UPDATE_HOUR}h"
+
 python3 /usr/bin/youversion_votd.py
 
 while true; do
@@ -16,7 +17,7 @@ while true; do
     CURRENT_HOUR=$(date +%-H)
     CURRENT_MIN=$(date +%-M)
     if [ "${CURRENT_HOUR}" = "${UPDATE_HOUR}" ] && [ "${CURRENT_MIN}" = "1" ]; then
-        echo "Atualizando versículo..."
+        bashio::log.info "Atualizando versículo do dia..."
         python3 /usr/bin/youversion_votd.py
     fi
 done
