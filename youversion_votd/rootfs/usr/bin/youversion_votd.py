@@ -6,7 +6,7 @@ import datetime
 import requests
 
 APP_KEY    = os.environ.get("APP_KEY", "")
-VERSION_ID = os.environ.get("VERSION_ID", "1588")
+VERSION_ID = os.environ.get("VERSION_ID", "3254")
 HA_TOKEN   = os.environ.get("SUPERVISOR_TOKEN", "")
 HA_URL     = "http://supervisor/core/api"
 
@@ -19,20 +19,33 @@ def strip_html(text):
 def fetch_votd():
     day_of_year = datetime.datetime.now().timetuple().tm_yday
 
-    # Busca o versículo do dia pelo dia do ano
+    # 1) Busca o passage_id do dia
     resp = requests.get(
-        f"{YOUVERSION_BASE}/verse_of_the_day/{day_of_year}",
-        params={"version_id": VERSION_ID},
+        f"{YOUVERSION_BASE}/verse_of_the_days/{day_of_year}",
         headers=YV_HEADERS,
         timeout=15,
     )
     resp.raise_for_status()
-    data = resp.json()
+    passage_id = resp.json()["passage_id"]
+    print(f"[INFO] Passage ID do dia: {passage_id}")
 
-    verse = data.get("verse", {})
-    text_clean = strip_html(verse.get("text", ""))
-    reference = verse.get("human_reference", "")
-    passage_id = verse.get("url", "")
+    # 2) Busca o texto da passagem
+    resp2 = requests.get(
+        f"{YOUVERSION_BASE}/bibles/{VERSION_ID}/passages/{passage_id}",
+        headers=YV_HEADERS,
+        timeout=15,
+    )
+    resp2.raise_for_status()
+    data = resp2.json()
+
+    content = data.get("data", data)
+    if isinstance(content, dict):
+        text_raw = content.get("content", content.get("text", str(content)))
+    else:
+        text_raw = str(content)
+
+    text_clean = strip_html(str(text_raw))
+    reference = passage_id.replace(".", " ")
 
     return {
         "text":          text_clean,
